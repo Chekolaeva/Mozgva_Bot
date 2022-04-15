@@ -16,18 +16,7 @@ from telegram.ext import (
     Filters
 )
 
-
-keyboard = [
-    ['Расписание игр', 'Рейтинг'],
-    ['Фотографии'],
-]
-
-markup = ReplyKeyboardMarkup(
-    keyboard,
-    one_time_keyboard=False,
-    resize_keyboard=True
-)
-
+from telegram.utils.helpers import escape_markdown
 
 
 def send_sched(update, context):
@@ -43,19 +32,34 @@ def send_rating(update, context):
     update.message.reply_text(form_rating(get_rating()), reply_markup=markup)   
 
 
+def send_photos(update, context):
+    text = escape_markdown(form_albums_vk(get_last_albums_vk()), version=2)
+    update.message.reply_text(text, reply_markup=markup, disable_web_page_preview=True, parse_mode="MarkdownV2")
+
+
 def other_text(update, context):
     update.message.reply_text("Нажмите на одну из кнопок Главного меню", reply_markup=markup)
 
+
+keyboard = [
+    ['Расписание игр', 'Рейтинг'],
+    ['Фотографии'],
+]
+
+markup = ReplyKeyboardMarkup(
+    keyboard,
+    one_time_keyboard=False,
+    resize_keyboard=True
+)
 
 updater = Updater(token)
 
 dispatcher = updater.dispatcher
 
-
 dispatcher.add_handler(MessageHandler(Filters.text("Расписание игр"), send_sched))
 dispatcher.add_handler(MessageHandler(Filters.text("Рейтинг"), send_rating))
+dispatcher.add_handler(MessageHandler(Filters.text("Фотографии"), send_photos))
 dispatcher.add_handler(MessageHandler(Filters.text, other_text))
-
 
 updater.start_polling()
 updater.idle()
