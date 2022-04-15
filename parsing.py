@@ -65,3 +65,23 @@ def get_rating():
         teams.append(team)
 
     return teams
+
+
+def get_last_albums_vk():
+    """Получение списка альбомов группы с помощью парсинга мобильной версии
+       вконтакте. Мобильные версии сайтов чаще всего проще парсить: там меньше
+       мусора, в них реже меняется дизайн."""
+
+    soup = get_soup('https://m.vk.com/albums-95512899?act=all')
+
+    albums = []
+
+    for link in soup.find_all('a', {'class': 'AlbumItem al_album'}):
+        album = {
+            "name": link.find('div', {"class": "AlbumItemInfo"}).find('div').text,
+            "url": f'https://vk.com{link["href"]}'
+        }
+        
+        albums.append(album)
+
+    return albums

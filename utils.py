@@ -20,3 +20,11 @@ def form_rating(rating_data):
     for team in rating_data:
         message += f'{team["position"]}. {team["name"]} {team["percentage"]}\n' 
     return message
+
+
+def form_albums_vk(albums):
+    message = '**Фотографии с игр**\\n\\n'
+    for album in albums:
+        message += f'• [{album["name"]}]({album["url"]})\n'
+
+    return message
