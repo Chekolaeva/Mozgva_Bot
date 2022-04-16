@@ -16,8 +16,6 @@ from telegram.ext import (
     Filters
 )
 
-from telegram.utils.helpers import escape_markdown
-
 
 def send_sched(update, context):
     sched_info = get_sched()
@@ -33,8 +31,8 @@ def send_rating(update, context):
 
 
 def send_photos(update, context):
-    text = escape_markdown(form_albums_vk(get_last_albums_vk()), version=2)
-    update.message.reply_text(text, reply_markup=markup, disable_web_page_preview=True, parse_mode="MarkdownV2")
+    text = form_albums_vk(get_last_albums_vk())
+    update.message.reply_text(text, reply_markup=markup, disable_web_page_preview=True)
 
 
 def other_text(update, context):

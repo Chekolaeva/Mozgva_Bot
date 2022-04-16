@@ -23,8 +23,8 @@ def form_rating(rating_data):
 
 
 def form_albums_vk(albums):
-    message = '**Фотографии с игр**\\n\\n'
+    message = 'Фотографии с игр\n\n'
     for album in albums:
-        message += f'• [{album["name"]}]({album["url"]})\n'
+        message += f'• {album["name"]}\n{album["url"]}\n\n'
 
     return message

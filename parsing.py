@@ -77,6 +77,9 @@ def get_last_albums_vk():
     albums = []
 
     for link in soup.find_all('a', {'class': 'AlbumItem al_album'}):
+        if link["href"].endswith("_0"):
+            continue
+        
         album = {
             "name": link.find('div', {"class": "AlbumItemInfo"}).find('div').text,
             "url": f'https://vk.com{link["href"]}'
